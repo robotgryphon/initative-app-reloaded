@@ -1,0 +1,104 @@
+html,
+body {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: black
+    url("http://www.toptal.com/designers/subtlepatterns/patterns/black_scales.png");
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-h {
+  display: flex;
+  flex-basis: row nowrap;
+}
+
+button {
+  background-color: cornflowerblue;
+  color: white;
+  border: unset;
+  font-weight: bold;
+}
+
+header {
+  display: flex;
+  flex-basis: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+
+  background-color: lighten(black, 20);
+  color: white;
+  font-size: 1.4em;
+  padding: 0.4em 1em;
+
+  button {
+    height: fit-content;
+    padding: 0.4em 1em;
+  }
+}
+
+#prev-turn-btn {
+  background-color: lighten(red, 20);
+}
+
+.swiper-container {
+  margin-top: 1em;
+  overflow: hidden;
+  width: 100%;
+  height: fit-content;
+}
+
+character-panel {
+  background-color: lighten(cornflowerblue, 15);
+  color: white;
+  transition: 1s ease;
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+
+  &[type="enemy"] {
+    background-color: lighten(red, 30);
+  }
+
+  &.active-slide {
+    transition: 0.5s ease;
+  }
+}
+
+character-panel[type="player"].active-slide {
+  background-color: darken(cornflowerblue, 15);
+  color: white;
+}
+
+character-panel[type="enemy"].active-slide {
+  background-color: lighten(red, 5);
+}
+
+button#clean {
+  background-color: gold;
+  color: black;
+}
+
+initiative-app {
+  overflow: hidden;
+  display: block;
+  button {
+    background-color: lightblue !important;
+    border-color: cornflowerblue !important;
+    color: cornflowerblue !important;
+  }
+}

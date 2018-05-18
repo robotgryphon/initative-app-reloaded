@@ -16,6 +16,14 @@ export async function loadCharacters() {
     }
   });
 
+  mapped = mapped.map(c => {
+    if (c.nameFirst || c.nameLast) {
+      c.name = `${c.nameFirst} ${c.nameLast}`;
+    }
+
+    return c;
+  });
+
   return mapped.filter(c => c);
 }
 

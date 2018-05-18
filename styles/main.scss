@@ -61,33 +61,6 @@ header {
   height: fit-content;
 }
 
-character-panel {
-  background-color: lighten(cornflowerblue, 15);
-  color: white;
-  transition: 1s ease;
-  width: 100%;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-
-  &[type="enemy"] {
-    background-color: lighten(red, 30);
-  }
-
-  &.active-slide {
-    transition: 0.5s ease;
-  }
-}
-
-character-panel[type="player"].active-slide {
-  background-color: darken(cornflowerblue, 15);
-  color: white;
-}
-
-character-panel[type="enemy"].active-slide {
-  background-color: lighten(red, 5);
-}
-
 button#clean {
   background-color: gold;
   color: black;

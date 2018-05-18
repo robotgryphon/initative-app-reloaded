@@ -1,0 +1,51 @@
+:host {
+  background-color: lighten(cornflowerblue, 15);
+  color: white;
+  transition: 1s ease;
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+
+  .character-name {
+    font-size: 32pt;
+    flex-grow: 1;
+    word-break: break-all;
+    text-align: center;
+    margin: 0;
+  }
+
+  .character-init {
+    font-size: 24pt;
+  }
+
+  &[type="enemy"] {
+    background-color: lighten(red, 30) !important;
+  }
+
+  &.active-slide {
+    transition: 0.5s ease;
+  }
+}
+
+:host[type="player"].active-slide {
+  background-color: darken(cornflowerblue, 15);
+  color: white;
+}
+
+:host[type="enemy"].active-slide {
+  background-color: lighten(red, 5);
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+:host.removing {
+  animation: fadeOut 0.25s steps(90) forwards;
+}

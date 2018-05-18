@@ -1,6 +1,6 @@
 import { html, render } from "lit-html/lib/lit-extended";
 import { repeat } from "lit-html/lib/repeat";
-import Glide from "@glidejs/glide/dist/glide.modular.esm";
+
 import { name } from "faker";
 
 import { Character, PlayerCharacter, EnemyCharacter } from "./model";
@@ -8,45 +8,34 @@ import "./character-panel";
 
 export class InitiativeApp extends HTMLElement {
   protected _characters: Character[];
-  protected glide;
+  protected current: Element;
+  public currentCharacter: Character;
+  public nextCharacter: Character;
 
   constructor() {
     super();
+    this.attachShadow({ mode: "open" });
     this._characters = new Array<Character>();
   }
 
   connectedCallback() {
     this.redraw();
-    this.createSlider();
+    this.current = this.shadowRoot.querySelector("character-panel");
     this.dispatchEvent(new Event("ready"));
   }
 
   public next() {
-    this.glide.go(">");
-  }
+    this.current.addEventListener("animationend", _ => {
+      let el = this.current;
+      el.remove();
+      el.classList.remove("removing");
 
-  public prev() {
-    this.glide.go("<");
-  }
-
-  protected createSlider() {
-    this.glide = new Glide(this, {
-      type: "slider",
-      startAt: 0,
-      perView: 2,
-      peek: 100,
-      focusAt: "center",
-      classes: {
-        activeSlide: "active-slide"
-      }
+      this.current = this.nextCharacter;
+      this.nextCharacter = this.current.nextElement;
+      this.container.appendChild(el);
     });
 
-    this.glide.mount();
-  }
-
-  public regenerate() {
-    if (this.glide) this.glide.destroy();
-    this.createSlider();
+    this.current.classList.add("removing");
   }
 
   public get characters() {
@@ -74,21 +63,18 @@ export class InitiativeApp extends HTMLElement {
   }
 
   private get template() {
-    if (this._characters.length == 0)
-      return html`<div data-glide-el="track"></div>`;
+    if (this._characters.length == 0) return html``;
 
     return html`
-        <div data-glide-el="track">
-          <ul class="glide__slides">
-            ${repeat(this.characters, (c: Character) =>
+        <div id="track">
+            ${repeat(this._characters, (c: Character) =>
               this.getCharacterTemplate(c)
             )}
-          </ul>
         </div>`;
   }
 
   redraw() {
-    render(this.template, this);
+    render(this.template, this.shadowRoot);
   }
 }
 customElements.define("initiative-app", InitiativeApp);

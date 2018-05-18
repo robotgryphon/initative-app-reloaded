@@ -8,7 +8,7 @@ console.clear();
 
 let characters = [];
 for (let i = 0; i < 5; i++) {
-  let nc = new PlayerCharacter();
+  let nc = Math.random() > 0.5 ? new PlayerCharacter() : new EnemyCharacter();
   nc.name = "Player";
   nc.initiative = getRandomNumber(1, 25);
 
@@ -42,10 +42,8 @@ document.querySelector("button#persist").addEventListener("click", () => {
 document.querySelector("button#load").addEventListener("click", async () => {
   let oldCharacters = app.characters;
   let newCharacters = await loadCharacters();
-
-  app.characters = [];
   app.characters = newCharacters;
-  app.regenerate();
+  app.redraw();
 });
 
 document.querySelector("button#clean").addEventListener("click", () => {
